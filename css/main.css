@@ -1,0 +1,20 @@
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+   
+  #out_links {
+    font-size: 10px;
+    display: block;
+    white-space: nowrap;
+  }
+  
+  #out_links ul {
+    list-style: none;
+  }
+  
+  textarea {
+    width: 100%
+  }
+  
+  

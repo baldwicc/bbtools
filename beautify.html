@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+  <html class="no-js lt-ie9 lt-ie8 lt-ie7">
+  <![endif]-->
+  <!--[if IE 7]>
+    <html class="no-js lt-ie9 lt-ie8">
+    <![endif]-->
+    <!--[if IE 8]>
+      <html class="no-js lt-ie9">
+      <![endif]-->
+      <!--[if gt IE 8]>
+        <!-->
+        <html class="no-js">
+        <!--<![endif]-->
+        
+        <head>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+          <title></title>
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width">
+          <link rel="stylesheet" href="css/bootstrap.min.css">
+          <style>
+            body {
+              padding-top: 60px;
+              padding-bottom: 40px;
+            }
+          </style>
+          <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+          <link rel="stylesheet" href="css/main.css">
+          <script src="js-beautify/third-party/codemirror2/lib/codemirror.js"></script>
+          <script src="js-beautify/third-party/codemirror2/mode/javascript/javascript.js"></script>
+          <link rel="stylesheet" href="js-beautify/third-party/codemirror2/lib/codemirror.css">
+          <!--[if lt IE 9]>
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <script>
+              window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')
+            </script>
+          <![endif]-->
+          <style>
+            #options td > input, #options td > label {
+              display: inline;
+            }
+            table#options td {
+              vertical-align: top;
+              padding-left: 10px;
+            }
+            #testresults {
+              display: none;
+              font-family: monaco, "lucida console", "courier new", monospace;
+            }
+            .CodeMirror {
+              border: 1px solid #ccc;
+              margin-bottom: 6px;
+              background: white;
+            }
+            .CodeMirror-scroll {
+              min-height: 400px;
+              max-height: 100%;
+              height: auto;
+              overflow-y: hidden;
+              overflow-x: auto;
+              width: 100%
+            }
+          </style>
+        </head>
+        
+        <body>
+          <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please
+              <a href="http://browsehappy.com/">upgrade your browser</a>or
+              <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a>to improve your experience.</p>
+          <![endif]-->
+          <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+          <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+              <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+
+                </a>
+                <a class="brand " href="index.html">Baldwins Blackboard things</a>
+                <div class="nav-collapse collapse">
+                  <ul class="nav">
+                    <li class="">
+                      <a href="framesetter.html">Framesetter</a>
+                    </li>
+                    <li class="active">
+                      <a href="beautify.html">Beautifier</a>
+                    </li>
+                    <li class="">
+                      <a href="decoder.html">Dumb dencoder</a>
+                    </li>
+                    <!--<li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">Nav header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li>
+                                </ul>
+                            </li>-->
+                  </ul>
+                </div>
+                <!--/.nav-collapse -->
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+              <div class="span8">
+                 <h2>Beautifier <small>Beautifier for javascript based on <a href="http://jsbeautifier.org/">http://jsbeautifier.org/</a></small></h2>
+
+                <p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span12">
+                 <h3>1. Choose some options</h3>
+
+                <table id="options">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <select name="tabsize" id="tabsize">
+                          <option value="1">indent with a tab character</option>
+                          <option value="2">indent with 2 spaces</option>
+                          <option value="3">indent with 3 spaces</option>
+                          <option value="4">indent with 4 spaces</option>
+                          <option value="8">indent with 8 spaces</option>
+                        </select>
+                        <br>
+                        <select id="brace-style">
+                          <option value="collapse">Braces with control statement</option>
+                          <option value="expand">Braces on own line</option>
+                          <option value="end-expand">End braces on own line</option>
+                          <!-- option value="expand-strict">Braces always on own line (not recommended)</option -->
+                        </select>
+                        <p style="margin:6px 0 0 0">HTML &lt;style&gt;, &lt;script&gt; formatting:</p>
+                        <select id="indent-scripts">
+                          <option value="keep">Keep indent level of the tag</option>
+                          <option value="normal">Add one indent level</option>
+                          <option value="separate">Separate indentation</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input class="checkbox" type="checkbox" id="preserve-newlines">
+                        <label for="preserve-newlines">Preserve empty lines?</label>
+                        <br>
+                        <input class="checkbox" type="checkbox" id="detect-packers">
+                        <label for="detect-packers">Detect packers and obfuscators?</label>
+                        <br>
+                        <input class="checkbox" type="checkbox" id="keep-array-indentation">
+                        <label for="keep-array-indentation">Keep array indentation?</label>
+                        <br>
+                        <input class="checkbox" type="checkbox" id="break-chained-methods">
+                        <label for="break-chained-methods">Break lines on chained methods?</label>
+                        <br>
+                        <input class="checkbox" type="checkbox" id="space-before-conditional">
+                        <label for="space-before-conditional">Space before conditional: "if(x)" / "if (x)"</label>
+                        <br>
+                        <input class="checkbox" type="checkbox" id="unescape-strings">
+                        <label for="unescape-strings">Unescape printable chars encoded as \xNN or \uNNNN?</label>
+                        <br>
+                        <a href="?without-codemirror" class="turn-off-codemirror">Use a simple textarea for code input?</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span12">
+                 <h3>2. Dump some Text and hit the button </h3>
+
+                <p>
+                  <button class="btn btn-primary" id="submit"><strong>Beautify JavaScript or HTML</strong>  <em>(ctrl-enter)</em>
+                  </button>
+                </p>
+                <p>
+                  <textarea id="source" rows="10"></textarea>
+                </p>
+              </div>
+            </div>
+            <hr>
+            <footer>
+              <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
+                <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" />
+              </a>
+            </footer>
+          </div>
+          <!-- /container -->
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+          <script>
+            window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')
+          </script>
+          <script src="js/vendor/bootstrap.min.js"></script>
+          <script src="js/plugins.js"></script>
+          <script src="js/main.js"></script>
+          <!-- <script src="js-beautify/third-party/jquery/jquery.js"></script> -->
+          <script src="js-beautify/third-party/jquery/jquery.cookie.js"></script>
+          <script src="js-beautify/beautify.js"></script>
+          <script src="js-beautify/beautify-css.js"></script>
+          <script src="js-beautify/beautify-html.js"></script>
+          <script src="js-beautify/tests/sanitytest.js"></script>
+          <script src="js-beautify/tests/beautify-tests.js"></script>
+          <script src="js-beautify/unpackers/javascriptobfuscator_unpacker.js"></script>
+          <script src="js-beautify/unpackers/urlencode_unpacker.js"></script>
+          <script src="js-beautify/unpackers/p_a_c_k_e_r_unpacker.js"></script>
+          <script src="js-beautify/unpackers/myobfuscate_unpacker.js"></script>
+          <script>
+            var the = {
+              use_codemirror: (!window.location.href.match(/without-codemirror/)),
+              beautify_in_progress: false,
+              editor: null // codemirror editor
+            };
+
+            function run_tests()
+            {
+              var st = new SanityTest();
+              run_beautifier_tests(st);
+              JavascriptObfuscator.run_tests(st);
+              P_A_C_K_E_R.run_tests(st);
+              Urlencoded.run_tests(st);
+              MyObfuscate.run_tests(st);
+              // $('#testresults').html(results.replace(/r/g, '').replace(/\n/g, '<br>'));
+              var results = st.results_raw().replace(/ /g, '&nbsp;').replace(/\r/g, '·').replace(/\n/g, '<br>');
+              $('#testresults').html(results).show();
+            }
+
+
+            function any(a, b)
+            {
+              return a || b;
+            }
+
+            function read_settings_from_cookie()
+            {
+              $('#tabsize').val(any($.cookie('tabsize'), '4'));
+              $('#brace-style').val(any($.cookie('brace-style'), 'collapse'));
+              $('#detect-packers').attr('checked', $.cookie('detect-packers') !== 'off');
+              $('#preserve-newlines').attr('checked', $.cookie('preserve-newlines') !== 'off');
+              $('#keep-array-indentation').attr('checked', $.cookie('keep-array-indentation') === 'on');
+              $('#break-chained-methods').attr('checked', $.cookie('break-chained-methods') === 'on');
+              $('#indent-scripts').val(any($.cookie('indent-scripts'), 'normal'));
+              $('#space-before-conditional').attr('checked', $.cookie('space-before-conditional') !== 'off');
+              $('#unescape-strings').attr('checked', $.cookie('unescape-strings') === 'on');
+            }
+
+            function store_settings_to_cookie()
+            {
+              var opts = {
+                expires: 360
+              };
+              $.cookie('tabsize', $('#tabsize').val(), opts);
+              $.cookie('brace-style', $('#brace-style').val(), opts);
+              $.cookie('detect-packers', $('#detect-packers').attr('checked') ? 'on' : 'off', opts);
+              $.cookie('preserve-newlines', $('#preserve-newlines').attr('checked') ? 'on' : 'off', opts);
+              $.cookie('keep-array-indentation', $('#keep-array-indentation').attr('checked') ? 'on' : 'off', opts);
+              $.cookie('break-chained-methods', $('#break-chained-methods').attr('checked') ? 'on' : 'off', opts);
+              $.cookie('space-before-conditional', $('#space-before-conditional').attr('checked') ? 'on' : 'off', opts);
+              $.cookie('unescape-strings', $('#unescape-strings').attr('checked') ? 'on' : 'off', opts);
+              $.cookie('indent-scripts', $('#indent-scripts').val(), opts);
+            }
+
+            function unpacker_filter(source)
+            {
+              var trailing_comments = '';
+              var comment = '';
+              var found = false;
+
+              do {
+                found = false;
+                if (/^\s*\/\*/.test(source))
+                {
+                  found = true;
+                  comment = source.substr(0, source.indexOf('*/') + 2);
+                  source = source.substr(comment.length).replace(/^\s+/, '');
+                  trailing_comments += comment + "\n";
+                }
+                else if (/^\s*\/\//.test(source))
+                {
+                  found = true;
+                  comment = source.match(/^\s*\/\/.*/)[0];
+                  source = source.substr(comment.length).replace(/^\s+/, '');
+                  trailing_comments += comment + "\n";
+                }
+              } while (found);
+
+              if (P_A_C_K_E_R.detect(source))
+              {
+                // P.A.C.K.E.R unpacking may fail, even though it is detected
+                var unpacked = P_A_C_K_E_R.unpack(source);
+                if (unpacked != source)
+                {
+                  source = unpacker_filter(unpacked);
+                }
+              }
+              if (Urlencoded.detect(source))
+              {
+                source = unpacker_filter(Urlencoded.unpack(source))
+              }
+              if (JavascriptObfuscator.detect(source))
+              {
+                source = unpacker_filter(JavascriptObfuscator.unpack(source))
+              }
+              if (MyObfuscate.detect(source))
+              {
+                source = unpacker_filter(MyObfuscate.unpack(source))
+              }
+
+              return trailing_comments + source;
+            }
+
+
+            function beautify()
+            {
+              if (the.beautify_in_progress) return;
+
+              store_settings_to_cookie();
+
+              the.beautify_in_progress = true;
+
+              var source = the.editor ? the.editor.getValue() : $('#source').val(),
+                output,
+                opts = {};
+
+              opts.indent_size = $('#tabsize').val();
+              opts.indent_char = opts.indent_size == 1 ? '\t' : ' ';
+              opts.preserve_newlines = $('#preserve-newlines').attr('checked');
+              opts.keep_array_indentation = $('#keep-array-indentation').attr('checked');
+              opts.break_chained_methods = $('#break-chained-methods').attr('checked');
+              opts.indent_scripts = $('#indent-scripts').val();
+              opts.brace_style = $('#brace-style').val();
+              opts.space_before_conditional = $('#space-before-conditional').attr('checked');
+              opts.unescape_strings = $('#unescape-strings').attr('checked');
+              opts.space_after_anon_function = true;
+
+              if (looks_like_html(source))
+              {
+                output = style_html(source, opts);
+              }
+              else
+              {
+                if ($('#detect-packers').attr('checked'))
+                {
+                  source = unpacker_filter(source);
+                }
+                output = js_beautify(source, opts);
+              }
+              if (the.editor)
+              {
+                the.editor.setValue(output);
+              }
+              else
+              {
+                $('#source').val(output);
+              }
+
+              the.beautify_in_progress = false;
+            }
+
+            function looks_like_html(source)
+            {
+              // <foo> - looks like html
+              // <!--\nalert('foo!');\n--> - doesn't look like html
+
+              var trimmed = source.replace(/^[ \t\n\r]+/, '');
+              var comment_mark = '<' + '!-' + '-';
+              return (trimmed && (trimmed.substring(0, 1) === '<' && trimmed.substring(0, 4) !== comment_mark));
+            }
+
+            $(function ()
+            {
+
+              read_settings_from_cookie();
+
+              var default_text = "// This is just a sample script. Paste your real code (javascript or HTML) here.\n\nif ('this_is'==/an_example/){of_beautifer();}else{var a=b?(c%d):e[f];}";
+
+              if (the.use_codemirror && typeof CodeMirror !== 'undefined')
+              {
+                the.editor = CodeMirror.fromTextArea($('#source').get(0))
+                the.editor.setValue(default_text);
+                $('.CodeMirror').click(function ()
+                {
+                  if (the.editor.getValue() == default_text)
+                  {
+                    the.editor.setValue('');
+                  }
+                });
+              }
+              else
+              {
+                $('#source').val(default_text).bind('click focus', function ()
+                {
+                  if ($(this).val() == default_text)
+                  {
+                    $(this).val('');
+                  }
+                }).bind('blur', function ()
+                {
+                  if (!$(this).val())
+                  {
+                    $(this).val(default_text);
+                  }
+                });
+              }
+
+
+              $(window).bind('keydown', function (e)
+              {
+                if (e.ctrlKey && e.keyCode == 13)
+                {
+                  beautify();
+                }
+              })
+              $('#submit').click(beautify);
+              $('select').change(beautify);
+
+
+            });
+          </script>
+          <script>
+            /*var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));*/
+          </script>
+        </body>
+        
+        </html>
