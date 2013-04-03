@@ -1,3 +1,5 @@
 Various tools for de/encoding, beautifying, cobbling and brutalizing in one fantastic useless place.
 
-This work is licensed under a Creative Commons Attribution 3.0 Unported License.
+Unless otherwise mentioned, this work is licensed under a Creative Commons Attribution 3.0 Unported License.
+
+Requires js-beautify:  https://github.com/einars/js-beautify
